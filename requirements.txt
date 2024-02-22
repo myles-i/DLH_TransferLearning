@@ -1,8 +1,8 @@
-tensorflow==2.1.0
+tensorflow==2.1.0=eigen_py36hbb90eaf_0
 h5py
 numpy
 pandas
-samplerate
+# samplerate
 scikit-learn
 scipy
 tqdm

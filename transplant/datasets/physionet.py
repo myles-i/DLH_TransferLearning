@@ -3,11 +3,11 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import samplerate
 import wfdb
 import wfdb.processing
 from sklearn.preprocessing import MultiLabelBinarizer
 from tqdm import tqdm
+from scipy import signal as sp_signal
 
 challenge17_mean = 0.0075
 challenge17_std = 0.2373
@@ -155,7 +155,11 @@ def resample_records(records, fs, verbose=False):
         signal = record.p_signal
         if fs != record.fs:
             fs_ratio = fs / record.fs
-            signal = samplerate.resample(signal, fs_ratio)
+            num_samples = len(signal)
+            num_output_samples = int(num_samples * fs_ratio)
+
+            # Resample the signal
+            signal = sp_signal.resample(signal, num_output_samples)
         signals.append(signal)
     return signals
 
