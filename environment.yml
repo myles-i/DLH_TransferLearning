@@ -1,8 +1,15 @@
+# to delete existing environment
+# conda env remove --name ecgtl
+# 
+# to create new environment
+# conda env create -f environment.yml
+# 
+# to update:
+# conda env update -f environment.yml
 name: ecgtl
-channels:
-  - defaults
 dependencies:
-  - tensorflow=2.1.0=eigen_py36hbb90eaf_0
+  - python=3.10
+  - tensorflow
   - h5py
   - numpy
   - pandas
