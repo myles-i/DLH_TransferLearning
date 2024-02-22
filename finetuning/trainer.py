@@ -62,6 +62,7 @@ if __name__ == '__main__':
 
     print('Loading train data from {} ...'.format(args.train))
     train = load_pkl(str(args.train))
+    print(train)
 
     if args.val:
         print('Loading validation data from {} ...'.format(args.val))

@@ -125,6 +125,7 @@ if __name__ == '__main__':
     if args.train.is_file():
         print('Loading train data from file {} ...'.format(args.train))
         train = load_pkl(str(args.train))
+        print(train)
         if val:
             # remove training examples of patients who belong to the validation set
             train_mask = np.isin(train['patient_ids'], val['patient_ids'], invert=True)
