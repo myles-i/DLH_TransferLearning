@@ -1,0 +1,15 @@
+name: ecgtl
+channels:
+  - defaults
+dependencies:
+  - tensorflow=2.1.0=eigen_py36hbb90eaf_0
+  - h5py
+  - numpy
+  - pandas
+  - scikit-learn
+  - scipy
+  - tqdm
+  - wfdb
+  - pip
+  - pip:
+    - samplerate
