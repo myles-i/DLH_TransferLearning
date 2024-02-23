@@ -9,14 +9,10 @@ This tutorial describes the process of pretraining a residual network on the Ice
 2. *Optionally, unzip the data files.* If you don't mind sacrificing storage for faster i/o, you can unzip the downloaded files. After running the code snippet below, your unzipped data should be in the `data/icentia11k_unzipped` directory.
 
     ```python
-   from transplant.datasets import icentia11k
-   from pretraining.utils import unzip_icentia11k
-   unzip_icentia11k(
-       db_dir='data/icentia11k',
-       patient_ids=icentia11k.ds_patient_ids,
-       out_dir='data/icentia11k_unzipped',
-       verbose=True)
-    ```
+from transplant.datasets import icentia11k
+from pretraining.utils import unzip_icentia11k
+unzip_icentia11k(db_dir='data/icentia11k_subset', patient_ids=icentia11k.ds_patient_ids, out_dir='data/icentia11k_subset_unzipped', verbose=True)
+```
 
 3. *Run the pretraining job of your choice.* Let's run a beat classification job which will produce output files, such as training history or model checkpoints, that can be found in the `jobs/beat_classification` directory. Notice the `--arch` option that we used to specify ResNet-18 as the architecture that we want to pretrain. For more options, see `pretraining/trainer.py`.
 
@@ -28,7 +24,16 @@ This tutorial describes the process of pretraining a residual network on the Ice
     --task "beat" \
     --train "/home/myles/ecg-transfer-learning/data/icentia11k_subset" \
     --arch "resnet18"
-    ``` 
+    ```
+
+     ```shell script
+    python -m pretraining.trainer \
+    --job-dir "jobs/beat_classification" \
+    --task "beat" \
+    --train "/home/myles/ecg-transfer-learning/data/icentia11k_subset_unzipped" \
+    --unzipped \
+    --arch "resnet18"
+    ```  
 
 4. *Save weights for finetuning.* Now that we have pretrained our ResNet-18, let's extract its weights from a model checkpoint into a separate file which we will later use for finetuning. However, first we need to choose the model checkpoint that we want to get the weights from. A solid choice is a checkpoint that scored good on our validation metric. 
 
