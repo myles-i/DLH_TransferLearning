@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 
-from transplant.utils import load_pkl
+from transplant.utils import load_pkl, save_pkl
 
 ds_segment_size = 2 ** 20 + 1   # 1,048,577
 ds_frame_size = 2 ** 11 + 1   # 2,049
@@ -343,7 +343,7 @@ def unzip_patient_data(db_dir, patient_id, out_dir=None):
     out_signal_file = os.path.join(out_dir or os.path.curdir, '{:05d}_batched.npy'.format(patient_id))
     out_labels_file = os.path.join(out_dir or os.path.curdir, '{:05d}_batched_lbls.npz'.format(patient_id))
     np.save(out_signal_file, signal)
-    np.savez(out_labels_file, **labels)
+    save_pkl(out_labels_file, compress = False,**labels)
 
 
 def load_patient_data(db_dir, patient_id, include_labels=True, unzipped=False):
@@ -417,7 +417,7 @@ def flatten_raw_labels(raw_labels):
     Each array contains a tuple of indices, labels for each segment.
     """
     num_segments = len(raw_labels)
-    labels = {'btype': [], 'rtype': [], 'size': num_segments}
+    labels = {'btype': [], 'rtype': []}
     for label_type in ['btype', 'rtype']:
         for segment_labels in raw_labels:
             flat_indices = []
