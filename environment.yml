@@ -17,3 +17,6 @@ dependencies:
   - scipy
   - tqdm
   - wfdb
+  - ipykernel
+  - ipdb
+  - matplotlib
