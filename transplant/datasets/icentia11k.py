@@ -7,6 +7,7 @@ from transplant.utils import load_pkl, save_pkl
 ds_segment_size = 2 ** 20 + 1   # 1,048,577
 ds_frame_size = 2 ** 11 + 1   # 2,049
 ds_patient_ids = np.arange(11000)
+# ds_patient_ids = [0, 1, 88, 89, 96, 97, 98, 99, 100, 109, 166, 167, 168, 186, 187, 188, 189, 190, 191, 196, 197, 221, 222, 223, 236] # Myles: these were uncorrupted in first download
 ds_sampling_rate = 250
 ds_mean = 0.0018  # mean over entire dataset
 ds_std = 1.3711   # std over entire dataset
@@ -379,6 +380,7 @@ def load_signal(db_dir, patient_id, unzipped=False, mmap_mode=None):
     if unzipped:
         signal = np.load(os.path.join(db_dir, '{:05d}_batched.npy'.format(patient_id)), mmap_mode=mmap_mode)
     else:
+        print(os.path.join(db_dir, '{:05d}_batched.pkl.gz'.format(patient_id)))
         signal = load_pkl(os.path.join(db_dir, '{:05d}_batched.pkl.gz'.format(patient_id)))
     return signal
 

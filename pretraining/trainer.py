@@ -85,6 +85,7 @@ if __name__ == '__main__':
                         help='Offset of the positive sample from the context.')
     parser.add_argument('--context-overlap', type=int, default=0, help='CPC Context overlap.')
     parser.add_argument('--batch-size', type=int, default=32, help='Batch size.')
+    parser.add_argument('--patient-ids', type=int, default=None, help='List of patient ids to train on. If empty, all patients in provided "train" directory are selected')
     parser.add_argument('--samples-per-patient', type=int, default=1000,
                         help='Number of data points that are sampled from a patient file once it is read.')
     parser.add_argument('--val-samples-per-patient', type=int, default=None,
@@ -125,6 +126,7 @@ if __name__ == '__main__':
     if args.train.is_file():
         print('Loading train data from file {} ...'.format(args.train))
         train = load_pkl(str(args.train))
+        print(train)
         if val:
             # remove training examples of patients who belong to the validation set
             train_mask = np.isin(train['patient_ids'], val['patient_ids'], invert=True)
@@ -147,7 +149,16 @@ if __name__ == '__main__':
         train_data = _create_dataset_from_data(train).shuffle(train_size)
     else:
         print('Building train data generators')
-        train_patient_ids = icentia11k.ds_patient_ids
+        if args.patient_ids is None:
+            # files are of format "####_batched_lbls_*"
+            # lets select all of the patient IDs that are in the train directory
+            # by finding all #### that match the pattern "####_batched_lbls_*" expressed as a regexp
+            import re
+            regexp = r'^(\d+)_batched_lbls.*'  # Adjusted regexp to match files starting with digits followed by "_batched_lbls"
+            train_patient_ids = [int(re.match(regexp, f).group(1)) for f in os.listdir(args.train) if re.match(regexp, f)]
+            train_patient_ids = sorted(train_patient_ids)
+        else:
+            train_patient_ids = args.patient_ids
         if val:
             # remove patients who belong to the validation set from train data
             train_patient_ids = np.setdiff1d(train_patient_ids, val['patient_ids'])
