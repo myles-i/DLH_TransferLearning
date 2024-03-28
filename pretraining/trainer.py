@@ -58,6 +58,8 @@ def _create_dataset_from_data(data):
         raise ValueError('data does not match the required spec: {}'.format(spec))
     dataset = tf.data.Dataset.from_tensor_slices((x, y))
     return dataset
+def list_of_ints(arg):
+  return [int(x) for x in arg.split(',')]
 
 
 if __name__ == '__main__':
@@ -85,7 +87,7 @@ if __name__ == '__main__':
                         help='Offset of the positive sample from the context.')
     parser.add_argument('--context-overlap', type=int, default=0, help='CPC Context overlap.')
     parser.add_argument('--batch-size', type=int, default=32, help='Batch size.')
-    parser.add_argument('--patient-ids', type=int, default=None, help='List of patient ids to train on. If empty, all patients in provided "train" directory are selected')
+    parser.add_argument('--patient-ids', type=list_of_ints, default=None, help='List of patient ids to train on. If empty, all patients in provided "train" directory are selected')
     parser.add_argument('--samples-per-patient', type=int, default=1000,
                         help='Number of data points that are sampled from a patient file once it is read.')
     parser.add_argument('--val-samples-per-patient', type=int, default=None,
@@ -159,6 +161,7 @@ if __name__ == '__main__':
             train_patient_ids = sorted(train_patient_ids)
         else:
             train_patient_ids = args.patient_ids
+  
         if val:
             # remove patients who belong to the validation set from train data
             train_patient_ids = np.setdiff1d(train_patient_ids, val['patient_ids'])
@@ -195,6 +198,7 @@ if __name__ == '__main__':
         validation_data = validation_data.batch(args.batch_size)
 
     strategy = tf.distribute.MirroredStrategy()
+
 
     with strategy.scope():
         print('Building model ...')
