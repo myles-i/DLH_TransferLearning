@@ -1,25 +1,17 @@
 # to delete existing environment
 # conda env remove --name ecgtl
-# 
+
 # to create new environment
 # conda env create -f environment.yml
-# 
+
 # to update:
 # conda env update -f environment.yml
-# 
+
 # to activate env:
 # conda activate ecgtl
+
 name: ecgtl
 dependencies:
   - python=3.10
-  - tensorflow
-  - h5py
-  - numpy
-  - pandas
-  - scikit-learn
-  - scipy
-  - tqdm
-  - wfdb
-  - ipykernel
-  - ipdb
-  - matplotlib
+  - pip:
+    - -r requirements.txt
