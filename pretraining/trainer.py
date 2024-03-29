@@ -243,6 +243,8 @@ if __name__ == '__main__':
             raise ValueError('Unknown metric: {}'.format(args.val_metric))
 
         logger = tf.keras.callbacks.CSVLogger(str(args.job_dir / 'history.csv'))
+        
+        tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=args.job_dir, profile_batch=5)
 
         model.fit(train_data, steps_per_epoch=steps_per_epoch, verbose=2, epochs=args.epochs,
-                  validation_data=validation_data, callbacks=[checkpoint, logger])
+                  validation_data=validation_data, callbacks=[checkpoint, logger, tensorboard_callback])
