@@ -273,7 +273,12 @@ def uniform_patient_generator(db_dir, patient_ids, repeat=True, shuffle=True, in
         if shuffle:
             np.random.shuffle(patient_ids)
         for patient_id in patient_ids:
-            patient_data = load_patient_data(db_dir, patient_id, include_labels=include_labels, unzipped=unzipped)
+            # surround with try catch and skip that patient if there is an error:
+            try:
+                patient_data = load_patient_data(db_dir, patient_id, include_labels=include_labels, unzipped=unzipped)
+            except Exception as e:
+                print(f"Error loading patient {patient_id}: {e}")
+                continue
             yield patient_id, patient_data
         if not repeat:
             break
