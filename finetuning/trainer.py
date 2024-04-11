@@ -138,9 +138,6 @@ if __name__ == '__main__':
 
         callbacks = []
 
-        logger = tf.keras.callbacks.CSVLogger(str(args.job_dir / 'history.csv'))
-        callbacks.append(logger)
-
         if args.val_metric in ['loss', 'acc']:
             monitor = ('val_' + args.val_metric) if val else args.val_metric
             checkpoint = tf.keras.callbacks.ModelCheckpoint(
@@ -178,7 +175,15 @@ if __name__ == '__main__':
                 monitor='val_loss', patience=50, verbose=1)
             callbacks.append(early_stopping)
 
-        model.fit(train_data, epochs=args.epochs, verbose=2, validation_data=val_data, callbacks=callbacks)
+        # ensure csv logger added last.
+        # see: https://stackoverflow.com/a/48489090
+        logger = tf.keras.callbacks.CSVLogger(str(args.job_dir / 'history.csv'))
+        callbacks.append(logger)
+
+        # save history object to npy file
+        # see: https://stackoverflow.com/a/61328750
+        history = model.fit(train_data, epochs=args.epochs, verbose=2, validation_data=val_data, callbacks=callbacks)
+        np.save(str(args.job_dir / 'history.npy'), history.history)
 
         # load best model for inference
         print('Loading the best weights from file {} ...'.format(str(args.job_dir / 'best_model.weights')))
