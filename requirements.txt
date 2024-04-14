@@ -8,3 +8,5 @@ tqdm
 wfdb
 ipykernel
 matplotlib
+# for obtaining google drive files without mounting drive
+gdown
