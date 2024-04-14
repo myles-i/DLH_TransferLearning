@@ -1,10 +1,19 @@
 # Transfer Learning for ECG Classification
-This is a DLH copy of the repo
+This is Team 1's project to perform replication work of the paper by Weismann and Conrad.
+
+The project deliverables can be found in the [report](report) directory.
+
+Citation:
+
+> Weimann, K., Conrad, T.O.F. Transfer learning for ECG classification. Sci Rep 11, 5251 (2021). https://doi.org/10.1038/s41598-021-84374-8
+
+---
+
 Scripts for [Pretraining](pretraining) and [Finetuning](finetuning) residual networks on ECG data.
 
 ## Installation
 
 Make sure that your virtual environment satisfies the following requirements before running any code:
 
-* Python version: `>=3.5.2`
+* Python version: `>=3.10`
 * Dependencies: `pip install -r requirements.txt`
