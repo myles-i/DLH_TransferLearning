@@ -1,0 +1,14 @@
+((*- extends 'index.tex.j2' -*))
+
+((* block author *))
+\author{Ted Hsu, Myles Iribarne, Daniel Xu}
+((* endblock author *))
+
+((* block title *))
+\title{DL4H Team 1 Draft Report}
+((* endblock title *))
+
+((* block bibliography *))
+\bibliographystyle{unsrt}
+\bibliography{references}
+((* endblock bibliography *))
