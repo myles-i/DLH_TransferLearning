@@ -1,5 +1,5 @@
 # Transfer Learning for ECG Classification
-This is Team 1's project to perform replication work of the paper by Weismann and Conrad.
+This is Team 1's project to perform replication work of the paper by Weimann and Conrad.
 
 The project deliverables can be found in the [report](report) directory.
 
