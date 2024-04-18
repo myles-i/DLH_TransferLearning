@@ -72,7 +72,6 @@ def main():
     #                                                               'By default use all available channels.')
     parser.add_argument("--epochs", type=int, required=True, help="Number of epochs.")
     parser.add_argument("--seed", type=int, required=True, help="Random state.")
-    parser.add_argument("--verbose", action="store_true", help="Show debug messages.")
     parser.add_argument(
         "--dryrun",
         action="store_true",
@@ -115,9 +114,6 @@ def main():
 
     if args.weights_file:
         command.extend(["--weights-file", str(args.weights_file)])
-
-    if args.verbose:
-        command.append("--verbose")
 
     print(f'Configured command:\n{" ".join(command)}')
     print("=" * 40)
