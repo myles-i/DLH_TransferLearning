@@ -109,6 +109,8 @@ def main():
         str(args.batch_size),
         "--epochs",
         str(args.epochs),
+        "--seed",
+        str(args.seed),
     ]
 
     if args.weights_file:
