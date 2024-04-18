@@ -102,7 +102,7 @@ def main():
         "--val-size",
         str(args.val_size),
         "--val-metric",
-        '"f1"',
+        'f1',
         "--arch",
         args.arch,
         "--batch-size",
