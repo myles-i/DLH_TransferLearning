@@ -30,7 +30,6 @@ def finetuning_spectogram_beat_generator(x_data, y_data, frame_size=2048, window
 def create_spectogram_dataset_from_data(data, frame_size=2048, window_size = 256, stride = 64,n_freqs = 64):
     time_dim = frame_size//stride
     freq_dim = window_size//2 if n_freqs == -1 else n_freqs
-    print("time_dim: ", time_dim, "freq_dim: ", freq_dim)
     dataset = tf.data.Dataset.from_generator(
         generator=finetuning_spectogram_beat_generator,
         output_types=(tf.float32, tf.int32),
