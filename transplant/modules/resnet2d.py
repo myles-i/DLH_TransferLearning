@@ -3,7 +3,6 @@
 # https://github.com/songrise/CNN_Keras/blob/main/src/ResNet-18.py
 # added ability to optional add classification layer top
 from keras.layers import Dense, Conv2D,  MaxPool2D, Flatten, GlobalAveragePooling2D,  BatchNormalization, Layer, Add
-from keras.models import Sequential
 from keras.models import Model
 import tensorflow as tf
 from transplant.datasets import icentia11k
@@ -96,7 +95,6 @@ class ResNet18_2D(tf.keras.Model):
             out = res_block(out)
 
         if self.include_top:
-            out = self.avg_pool(out)
             out = self.flat(out)
             out = self.fc(out)
         return out
