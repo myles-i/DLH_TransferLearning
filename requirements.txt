@@ -11,3 +11,4 @@ matplotlib
 # for obtaining google drive files without mounting drive
 gdown
 librosa
+nbdime # to install for git diff, do "nbdime config-git --enable --global " in terminal
