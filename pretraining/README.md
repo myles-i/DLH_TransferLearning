@@ -22,8 +22,8 @@ This tutorial describes the process of pretraining a residual network on the Ice
     python -m pretraining.trainer \
     --job-dir "jobs/beat_classification" \
     --task "beat" \
-    --train "/home/myles/ecg-transfer-learning/data/icentia11k_subset" \
-    --arch "resnet18"
+    --train "/home/myles/uiuc/DLH/ecg-transfer-learning/data/icentia11k_subset" \
+    --arch "resnet18_2d"
     ```
 
      ```shell script

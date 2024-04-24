@@ -35,7 +35,7 @@ def task_solver(task, arch='resnet18', stages=None, return_feature_extractor=Fal
     elif isinstance(last_residual_block, BottleneckBlock):
         d_model = last_residual_block.filters * last_residual_block.expansion
     else:
-        raise ValueError('Feature extractor is not a residual network')
+        d_model = None
     if task == 'rhythm':
         num_classes = len(icentia11k.ds_rhythm_names)
         model = tf.keras.Sequential([
@@ -44,10 +44,16 @@ def task_solver(task, arch='resnet18', stages=None, return_feature_extractor=Fal
         ])
     elif task == 'beat':
         num_classes = len(icentia11k.ds_beat_names)
-        model = tf.keras.Sequential([
-            feature_extractor,
-            tf.keras.layers.Dense(num_classes)
-        ])
+        if arch == 'resnet18_2d':
+            model = tf.keras.Sequential([
+                feature_extractor,
+                tf.keras.layers.Flatten(),
+                tf.keras.layers.Dense(num_classes)])
+        else:
+            model = tf.keras.Sequential([
+                feature_extractor,
+                tf.keras.layers.Dense(num_classes)])
+
     elif task == 'hr':
         num_classes = len(icentia11k.ds_hr_names)
         model = tf.keras.Sequential([
@@ -55,6 +61,10 @@ def task_solver(task, arch='resnet18', stages=None, return_feature_extractor=Fal
             tf.keras.layers.Dense(num_classes)
         ])
     elif task == 'cpc':
+        # error if d_model is empty
+        if d_model is None:
+            raise ValueError('model not compatibly with CPCSolver')
+        
         model = CPCSolver(signal_embedding=feature_extractor,
                           transformer=Encoder(num_layers=3, d_model=d_model, num_heads=8,
                                               dff=2 * d_model, dropout=0.))

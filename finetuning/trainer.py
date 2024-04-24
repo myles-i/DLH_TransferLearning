@@ -118,6 +118,8 @@ if __name__ == '__main__':
 
         # add classification layer on top of the ecg feature extractor
         model = ecg_feature_extractor(args.arch)
+        if args.arch == 'resnet18_2d':
+            model.add(tf.keras.layers.Flatten())
         model.add(tf.keras.layers.Dense(num_classes, activation=activation))
 
         # initialize the weights of the model

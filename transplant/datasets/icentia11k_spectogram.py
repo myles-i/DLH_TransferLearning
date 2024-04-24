@@ -17,7 +17,8 @@ def spectogram_preprocessor(signal, frame_size=None, window_size=256, stride=64,
     x =librosa.stft(signal, n_fft=window_size, hop_length=stride)
     x = np.abs(x) # take the magnitude, ignore the phase
     x = librosa.amplitude_to_db(x, ref = np.min) # express in db so mag is in log scale
-    x = x[0:n_freqs, 0:n_slices]
+    # x = 20*np.log10(x + 1e-6) # convert to decibels
+    x = x[1:n_freqs+1, 0:n_slices]
     # x = x/np.max(x) # normalize to between 0 and 1
     x = np.expand_dims(x, axis=2)  # add channel dimension
     return x

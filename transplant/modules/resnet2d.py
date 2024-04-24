@@ -60,7 +60,7 @@ class ResnetBlock(Model):
 
 class ResNet18_2D(tf.keras.Model):
 
-    def __init__(self, num_classes, include_top=True, **kwargs):
+    def __init__(self, num_classes = 1, include_top=True, **kwargs):
         """
             num_classes: number of classes in specific classification task.
         """
@@ -95,6 +95,7 @@ class ResNet18_2D(tf.keras.Model):
             out = res_block(out)
 
         if self.include_top:
+            out = self.avg_pool(out)
             out = self.flat(out)
             out = self.fc(out)
         return out

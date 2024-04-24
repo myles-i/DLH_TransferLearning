@@ -11,6 +11,7 @@ from pretraining.utils import task_solver
 from transplant.datasets import icentia11k
 from transplant.evaluation import CustomCheckpoint, f1
 from transplant.modules.utils import build_input_tensor_from_shape
+from transplant.datasets.icentia11k_spectogram import *
 from transplant.utils import (
     matches_spec,
     load_pkl,
@@ -25,9 +26,18 @@ def _create_dataset_from_generator(patient_ids, samples_per_patient=None):
             db_dir=str(args.train), patient_ids=patient_ids, frame_size=args.frame_size,
             unzipped=args.unzipped, samples_per_patient=samples_per_patient)
     elif args.task == 'beat':
-        dataset = datasets.beat_dataset(
-            db_dir=str(args.train), patient_ids=patient_ids, frame_size=args.frame_size,
-            unzipped=args.unzipped, samples_per_patient=samples_per_patient)
+        if args.arch == 'resnet18_2d':
+            # hardcode these hyperparameters for now
+            window_size = 256
+            stride = 32
+            n_freqs = 128
+            dataset = spectogram_beat_dataset(db_dir=str(args.train), patient_ids = patient_ids, frame_size = args.frame_size,
+                   unzipped=args.unzipped, samples_per_patient=samples_per_patient,
+                   window_size = window_size, stride=stride, n_freqs=n_freqs)
+        else:
+            dataset = datasets.beat_dataset(
+                db_dir=str(args.train), patient_ids=patient_ids, frame_size=args.frame_size,
+                unzipped=args.unzipped, samples_per_patient=samples_per_patient)
     elif args.task == 'hr':
         dataset = datasets.heart_rate_dataset(
             db_dir=str(args.train), patient_ids=patient_ids, frame_size=args.frame_size,

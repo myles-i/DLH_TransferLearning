@@ -1,11 +1,17 @@
 import numpy as np
 import sklearn.model_selection
 import tensorflow as tf
-
+from transplant.modules.resnet2d import ResNet18_2D
 from transplant.modules.resnet1d import ResNet, BottleneckBlock
 
 
 def ecg_feature_extractor(arch=None, stages=None):
+
+    if arch == 'resnet18_2d':
+        pooling = tf.keras.layers.GlobalAveragePooling2D()
+    else:
+        pooling = tf.keras.layers.GlobalAveragePooling1D()
+    
     if arch is None or arch == 'resnet18':
         resnet = ResNet(num_outputs=None,
                         blocks=(2, 2, 2, 2)[:stages],
@@ -22,11 +28,13 @@ def ecg_feature_extractor(arch=None, stages=None):
                         kernel_size=(7, 5, 5, 3),
                         block_fn=BottleneckBlock,
                         include_top=False)
+    elif arch == 'resnet18_2d':
+        resnet = ResNet18_2D(include_top = False)
     else:
         raise ValueError('unknown architecture: {}'.format(arch))
     feature_extractor = tf.keras.Sequential([
         resnet,
-        tf.keras.layers.GlobalAveragePooling1D()
+        pooling
     ])
     return feature_extractor
 
