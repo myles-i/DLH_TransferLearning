@@ -8,15 +8,14 @@ import librosa
 def _str(s):
     return s.decode() if isinstance(s, bytes) else str(s)
 
-def spectogram_preprocessor(signal, frame_size=None, window_size=256, stride=64, n_freqs = -1, fs=250.):
-
+def spectogram_preprocessor(signal, frame_size=None, window_size=256, stride=64, n_freqs = -1, fs=250., ref = np.min):
     if not frame_size:
         frame_size = len(signal)
     n_slices = frame_size//stride
     # ch1 = librosa.feature.melspectrogram(n_mels = N,y=signal, n_fft = window_size, hop_length = stride, sr =fs)
     x =librosa.stft(signal, n_fft=window_size, hop_length=stride)
     x = np.abs(x) # take the magnitude, ignore the phase
-    x = librosa.amplitude_to_db(x, ref = np.min) # express in db so mag is in log scale
+    x = librosa.amplitude_to_db(x, ref = ref) # express in db so mag is in log scale
     # x = 20*np.log10(x + 1e-6) # convert to decibels
     x = x[1:n_freqs+1, 0:n_slices]
     # x = x/np.max(x) # normalize to between 0 and 1
