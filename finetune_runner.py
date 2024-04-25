@@ -121,13 +121,9 @@ def main():
 
     if args.dryrun:
         print("Dryrun -- Exiting.")
-        # debug
-        start = time.time()
-        with open(job_dir / "time.txt", "w") as f:
-            end = time.time() - start
-            f.write(f"Total time for weight type {args.weights_type}, seed {args.seed}: {end} seconds.")
         sys.exit(0)
 
+    start = time.time()
 
     # Source: https://stackoverflow.com/a/28319191
     with subprocess.Popen(
@@ -140,6 +136,9 @@ def main():
         raise subprocess.CalledProcessError(p.returncode, p.args)
 
     end = time.time() - start
+
+    with open(job_dir / "time.txt", "w") as f:
+        f.write(f"Total time for weight type {args.weights_type}, seed {args.seed}: {end} seconds.")
 
 
 if __name__ == "__main__":
