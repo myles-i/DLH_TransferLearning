@@ -174,7 +174,7 @@ if __name__ == '__main__':
 
         if val:
             early_stopping = tf.keras.callbacks.EarlyStopping(
-                monitor='val_loss', patience=50, verbose=1)
+                monitor='acc', patience=50, verbose=1)
             callbacks.append(early_stopping)
 
         # ensure csv logger added last.
