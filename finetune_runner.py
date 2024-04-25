@@ -123,7 +123,7 @@ def main():
         print("Dryrun -- Exiting.")
         # debug
         start = time.time()
-        with open(job_dir / "time.txt") as f:
+        with open(job_dir / "time.txt", "w") as f:
             end = time.time() - start
             f.write(f"Total time for weight type {args.weights_type}, seed {args.seed}: {end} seconds.")
         sys.exit(0)
