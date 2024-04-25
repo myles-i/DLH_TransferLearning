@@ -17,6 +17,7 @@ import argparse
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 
 def main():
@@ -120,7 +121,13 @@ def main():
 
     if args.dryrun:
         print("Dryrun -- Exiting.")
+        # debug
+        start = time.time()
+        with open(job_dir / "time.txt") as f:
+            end = time.time() - start
+            f.write(f"Total time for weight type {args.weights_type}, seed {args.seed}: {end} seconds.")
         sys.exit(0)
+
 
     # Source: https://stackoverflow.com/a/28319191
     with subprocess.Popen(
@@ -131,6 +138,8 @@ def main():
 
     if p.returncode != 0:
         raise subprocess.CalledProcessError(p.returncode, p.args)
+
+    end = time.time() - start
 
 
 if __name__ == "__main__":
