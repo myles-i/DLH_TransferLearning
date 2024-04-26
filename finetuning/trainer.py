@@ -132,7 +132,7 @@ if __name__ == '__main__':
             # initialize weights (excluding the optimizer state) to load the pretrained resnet
             # the optimizer state is randomly initialized in the `model.compile` function
             print('Loading weights from file {} ...'.format(args.weights_file))
-            model.load_weights(str(args.weights_file), by_name=True, skip_mismatch=True)
+            model.load_weights(str(args.weights_file))
 
         model.add(tf.keras.layers.Dense(num_classes, activation=activation, name='new_dense'))
         model.compile(optimizer=tf.keras.optimizers.Adam(),
