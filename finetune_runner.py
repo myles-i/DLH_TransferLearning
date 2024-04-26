@@ -77,12 +77,23 @@ def main():
     parser.add_argument("--epochs", type=int, required=True, help="Number of epochs.")
     parser.add_argument("--seed", type=int, required=True, help="Random state.")
     # dryrun argument can be True False or {}. If argument is not present, it is False. If it is present and empty, it is True
+    def str2bool(v):
+        if isinstance(v, bool):
+            return v
+        if v.lower() in ('yes', 'true', 't', 'y', '1'):
+            return True
+        elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+            return False
+        else:
+            raise argparse.ArgumentTypeError('Boolean value expected.')
+
     parser.add_argument(
         "--dryrun",
         nargs="?",
         const=True,
         default=False,
-        help="If present, the script will not run the command.",
+        type=str2bool,
+        help="If present, the script will not run the command."
     )
     args = parser.parse_args()
 
