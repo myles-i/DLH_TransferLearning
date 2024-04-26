@@ -101,9 +101,9 @@ def main():
     job_name += f"__{args.weights_type}_seed{args.seed}"
 
     job_dir = args.job_base_dir / job_name
-    print("=" * 40)
-    print(f"Finetuning output job dir: {job_dir}")
-    print("=" * 40)
+    # print("=" * 40)
+    # print(f"Finetuning output job dir: {job_dir}")
+    # print("=" * 40)
 
     command = [
         "python",
@@ -137,7 +137,7 @@ def main():
     print("=" * 40)
 
     if args.dryrun:
-        print("Dryrun -- Exiting.")
+        # print("Dryrun -- Exiting.")
         sys.exit(0)
 
     start = time.time()
