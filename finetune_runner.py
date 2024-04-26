@@ -61,7 +61,7 @@ def main():
     parser.add_argument(
         "--arch",
         default="resnet18",
-        help="Network architecture: " "`resnet18`, `resnet34` or `resnet50`.",
+        help="Network architecture: " "`resnet18`, `resnet34`, `resnet50`, 'resnet18_2d.",
     )
     # parser.add_argument('--subset', type=float, default=None, help='Size of a subset of the train set '
     #                                                                'or proportion of the train set.')
@@ -73,10 +73,13 @@ def main():
     #                                                               'By default use all available channels.')
     parser.add_argument("--epochs", type=int, required=True, help="Number of epochs.")
     parser.add_argument("--seed", type=int, required=True, help="Random state.")
+    # dryrun argument can be True False or {}. If argument is not present, it is False. If it is present and empty, it is True
     parser.add_argument(
         "--dryrun",
-        action="store_true",
-        help="Print the command that would be run and exit.",
+        nargs="?",
+        const=True,
+        default=False,
+        help="If present, the script will not run the command.",
     )
     args = parser.parse_args()
 
