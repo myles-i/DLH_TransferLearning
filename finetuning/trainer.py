@@ -120,7 +120,7 @@ if __name__ == '__main__':
         model = ecg_feature_extractor(args.arch)
         if args.arch == 'resnet18_2d':
             model.add(tf.keras.layers.Flatten())
-        model.add(tf.keras.layers.Dense(num_classes, activation=activation, name='new_dense'))
+        
 
         # initialize the weights of the model
         inputs = tf.keras.layers.Input(train['x'].shape[1:], dtype=train['x'].dtype)
@@ -134,6 +134,7 @@ if __name__ == '__main__':
             print('Loading weights from file {} ...'.format(args.weights_file))
             model.load_weights(str(args.weights_file), by_name=True, skip_mismatch=True)
 
+        model.add(tf.keras.layers.Dense(num_classes, activation=activation, name='new_dense'))
         model.compile(optimizer=tf.keras.optimizers.Adam(),
                       loss=loss,
                       metrics=[accuracy])
