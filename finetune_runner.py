@@ -46,8 +46,11 @@ def main():
     parser.add_argument(
         "--test", type=Path, required=True, help="Path to the test file."
     )
+
+    # allow for no arguments to be passsed to weights-file
     parser.add_argument(
         "--weights-file",
+        nargs="?",
         type=Path,
         help="Path to pretrained weights or a checkpoint of the model.",
     )
