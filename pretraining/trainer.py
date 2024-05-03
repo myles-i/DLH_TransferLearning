@@ -171,7 +171,8 @@ if __name__ == '__main__':
             train_patient_ids = sorted(train_patient_ids)
         else:
             train_patient_ids = args.patient_ids
-  
+
+        print("# Patient IDs: ", len(train_patient_ids))
         if val:
             # remove patients who belong to the validation set from train data
             train_patient_ids = np.setdiff1d(train_patient_ids, val['patient_ids'])
