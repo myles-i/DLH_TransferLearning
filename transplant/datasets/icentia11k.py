@@ -267,7 +267,7 @@ def uniform_patient_generator(db_dir, patient_ids, repeat=True, shuffle=True, in
 
     @return: Generator that yields a tuple of patient id and patient data.
     """
-    max_error = 10
+    max_error = 100
     num_error = 0
     if shuffle:
         patient_ids = np.copy(patient_ids)
@@ -280,7 +280,7 @@ def uniform_patient_generator(db_dir, patient_ids, repeat=True, shuffle=True, in
                 patient_data = load_patient_data(db_dir, patient_id, include_labels=include_labels, unzipped=unzipped)
             except Exception as e:
                 num_error = num_error + 1
-                print(f"Error loading patient {patient_id}: {e}")
+                print(f"({num_error}/{max_error}) Error loading patient {patient_id}: {e}")
                 if num_error > max_error:
                     raise e
                 else:
