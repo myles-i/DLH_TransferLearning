@@ -8,7 +8,7 @@ import librosa
 def _str(s):
     return s.decode() if isinstance(s, bytes) else str(s)
 
-def spectogram_preprocessor(signal, frame_size=None, window_size=256, stride=64, n_freqs = -1, fs=250., output_db = True, ref = np.min, amin = 1e-5, top_db = 80):
+def spectogram_preprocessor(signal, frame_size=None, window_size=256, stride=64, n_freqs = -1, fs=250., output_db = False, ref = np.min, amin = 1e-5, top_db = 80):
     if not frame_size:
         frame_size = len(signal)
     n_slices = frame_size//stride
