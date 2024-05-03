@@ -6,7 +6,9 @@ The draft report is: [DL4H_Team_1_draft.ipynb](DL4H_Team_1_draft.ipynb).
 
 ## Final Report
 
-Work in Progress
+The final report is: [DL4H_Team_1.ipynb](DL4H_Team_1.ipynb).
+
+The video is: (link TBD)
 
 ## PDF Generation
 
@@ -25,6 +27,11 @@ $ jupyter nbconvert DL4H_Team_1_draft.ipynb --to pdf --template-file draft.tplx 
 # for the final
 $ jupyter nbconvert DL4H_Team_1.ipynb --to pdf --template-file final.tplx --TagRemovePreprocessor.remove_cell_tags="hidden"
 ```
+
+The output PDF will be located in this directory as well.
+
+
+### Hiding notebook cells from PDF
 
 One can mark some cells in the notebook to be hidden in the output PDF. One way to do this is to set the cell tag in an editor like VSCode.
 
