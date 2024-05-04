@@ -24,7 +24,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--weights-type",
-        choices=("random", "20", "10", "1", "100"),
+        choices=("random", "50", "20", "10", "1", "100"),
         required=True,
         help="Weight type",
     )
