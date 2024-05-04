@@ -69,7 +69,7 @@ def main():
     # parser.add_argument('--subset', type=float, default=None, help='Size of a subset of the train set '
     #                                                                'or proportion of the train set.')
     parser.add_argument("--batch-size", type=int, default=32, help="Batch size.")
-    parser.add_argument('--val-metric', default='acc',
+    parser.add_argument('--val-metric', default='f1',
                         help='Validation metric used to find the best model at each epoch. Supported metrics are:'
                              '`loss`, `acc`, `f1`, `auc`.')
     # parser.add_argument('--channel', type=int, default=None, help='Use only the selected channel. '
