@@ -79,7 +79,10 @@ def task_solver(task, arch='resnet18', stages=None, return_feature_extractor=Fal
 def get_pretrained_weights(checkpoint_file, task, arch='resnet18', stages=None):
     model, feature_extractor = task_solver(task, arch, stages=stages, return_feature_extractor=True)
     if task in ['rhythm', 'beat', 'hr']:
-        inputs = build_input_tensor_from_shape(tf.TensorShape((None, 1)))
+        if arch == 'resnet18_2d':
+            inputs = build_input_tensor_from_shape(tf.TensorShape((None, None, 1)))
+        else:
+            inputs = build_input_tensor_from_shape(tf.TensorShape((None,1)))
     elif task == 'cpc':
         # exact shapes do not matter during the initialization
         inputs = build_input_tensor_from_shape({'context': tf.TensorShape((1, 1, 1)),
