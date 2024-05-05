@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-import common
+from report import common
 
 
 def make_epoch_table(history_all, decimals=1):
