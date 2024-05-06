@@ -50,7 +50,7 @@ def plot_f1_by_epoch(history_all):
     ax.plot(
         "epoch",
         "mean",
-        color="tab:blue",
+        color="tab:purple",
         data=data.loc["1"],
         label="Pre-train 1",
     )
@@ -71,7 +71,7 @@ def plot_f1_by_epoch(history_all):
     ax.plot(
         "epoch",
         "mean",
-        color="tab:orange",
+        color="tab:green",
         data=data.loc["88"],
         label="Pre-train 88",
     )
