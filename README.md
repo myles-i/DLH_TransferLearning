@@ -9,7 +9,7 @@ Specifically, we reproduced the paper's results for the following pre-training t
 - Fine-tuning objective: Atrial Fibrillation
 
 We also evaluated the effects of pre-training datasize on the fine-tuned models performance, as evaluated by the macro F1 score on 1% , 10%, 20% and 100% of the pretraining data. The results are shown here:
-[Resnet1d F1 scores](report/images/1dResNetF1Scores.JPG)
+![Resnet1d F1 scores](report/images/1dResNetF1Scores.JPG)
 
 
 Finally, we extended the author's results by preprocessing the ECG signals into a spectrogram, and using a 2DResNet instead of the original author's 1D Resnet model. the hyperparameters chosen for the spectrogram are shown here:
