@@ -133,12 +133,14 @@ def make_f1_table(predictions):
     per_class_f1 = common._make_per_class_f1_table(predictions)
     table = (
         macro_f1.join(per_class_f1)
-        .reindex(["random", "10", "20"])
+        .reindex(["random", "1", "10", "20", "100"])
         .rename(
             index={
                 "random": "Random",
+                "1": "Pre-train 1",
                 "10": "Pre-train 10",
                 "20": "Pre-train 20",
+                "100": "Pre-train 100",
             }
         )
         .reset_index()

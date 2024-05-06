@@ -3,7 +3,6 @@ import pandas as pd
 
 from report import common
 
-
 def make_epoch_table(history_all, decimals=1):
     table = (
         history_all.groupby(["weight_type", "seed"])
@@ -14,12 +13,14 @@ def make_epoch_table(history_all, decimals=1):
             Std=pd.NamedAgg("epoch", "std"),
         )
         .round(decimals)
-        .reindex(["random", "10", "20"])
+        .reindex(["random", "1", "10", "20", "88"])
         .rename(
             index={
                 "random": "Random",
+                "1": "Pre-train 1",
                 "10": "Pre-train 10",
                 "20": "Pre-train 20",
+                "88": "Pre-train 88",
             }
         )
         .reset_index()
@@ -50,6 +51,13 @@ def plot_f1_by_epoch(history_all):
         "epoch",
         "mean",
         color="tab:blue",
+        data=data.loc["1"],
+        label="Pre-train 1",
+    )
+    ax.plot(
+        "epoch",
+        "mean",
+        color="tab:blue",
         data=data.loc["10"],
         label="Pre-train 10",
     )
@@ -59,6 +67,13 @@ def plot_f1_by_epoch(history_all):
         color="tab:orange",
         data=data.loc["20"],
         label="Pre-train 20",
+    )
+    ax.plot(
+        "epoch",
+        "mean",
+        color="tab:orange",
+        data=data.loc["88"],
+        label="Pre-train 88",
     )
     ax.legend()
     # Replicate y-axis in Figure 3(a) of the paper.
@@ -78,8 +93,7 @@ def plot_f1_by_epoch_with_range(history_all):
         data=data.loc["random"],
         label="Random",
     )
-    ax.plot("epoch", "mean", data=data.loc["10"], label="Pre-train 10")
-    ax.plot("epoch", "mean", data=data.loc["20"], label="Pre-train 20")
+    ax.plot("epoch", "mean", data=data.loc["88"], label="Pre-train 88")
     ax.legend()
 
     # Add min, max range
@@ -91,8 +105,7 @@ def plot_f1_by_epoch_with_range(history_all):
         color="tab:red",
         alpha=0.15,
     )
-    ax.fill_between("epoch", "min", "max", data=data.loc["10"], alpha=0.15)
-    ax.fill_between("epoch", "min", "max", data=data.loc["20"], alpha=0.15)
+    ax.fill_between("epoch", "min", "max", data=data.loc["88"], alpha=0.15)
     # Replicate y-axis in Figure 3(a) of the paper.
     ax.set_ylim([0.5, 1.0])
 
@@ -106,12 +119,14 @@ def make_f1_table(predictions):
     per_class_f1 = common._make_per_class_f1_table(predictions)
     table = (
         macro_f1.join(per_class_f1)
-        .reindex(["random", "10", "20"])
+        .reindex(["random", "1", "10", "20", "88"])
         .rename(
             index={
                 "random": "Random",
+                "1": "Pre-train 1",
                 "10": "Pre-train 10",
                 "20": "Pre-train 20",
+                "88": "Pre-train 88",
             }
         )
         .reset_index()
@@ -198,3 +213,4 @@ def plot_f1_by_pretrain_percentage(predictions1d, predictions2d):
     ax.plot("scenario", "f1", data=data_2d, marker="s", label="2-D Model")
     ax.legend()
     ax.set_ylim([0.7, 0.8])
+    ax.grid()
