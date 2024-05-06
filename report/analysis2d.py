@@ -130,3 +130,71 @@ def make_f1_table(predictions):
     # Explicitly select columns in desired order.
     table = table[["Type", "F1", "F1n", "F1a", "F1o", "F1p"]]
     return table
+
+
+def _format_f1_by_pretrain_percentage(predictions):
+    """
+    Helper for plot_f1_by_pretrain_percentage().
+
+    Input:
+        dict that is from a predictions_all.pkl file, expected
+        to be produced by a collation job of all the trials for
+        all scenarios for a particular model configuration.
+
+    Output:
+        dataframe with weight_type (int), f1 (float) columns
+    """
+    macro = []
+    for key, value in predictions.items():
+        weight_type, seed = key.split("_")
+        identifier = {"weight_type": weight_type, "seed": seed}
+        # Details about my_f1 are in the Evaluation > Fine-tuning section.
+        macro_f1 = common.my_f1(
+            value["y_true"], value["y_prob"], average="macro"
+        )
+        macro_f1 = {"f1": macro_f1}
+        macro.append(identifier | macro_f1)
+
+    macro_scores = pd.DataFrame(macro)
+    macro_df = (
+        macro_scores.groupby(["weight_type"])[["f1"]]
+        .mean()
+        # Random scenario is considered 0% pre-training.
+        .rename(index={"random": 0})
+        # Ensure output is in tabular format
+        .reset_index()
+        .rename(columns={"weight_type": "scenario"})
+    )
+    # When 'random' is part of weight_type column, the column is type 'object',
+    # which matplotlib plot does not like because plot expects numeric types.
+    # But since we've mapped 'random' to the number zero, we simply cast to
+    # fix this issue.
+    macro_df["scenario"] = macro_df["scenario"].astype(int)
+    # matplotlib appears to connect dots in the order they appear in the
+    # input to plot, so we sort in ascending order of pre-train percentage.
+    macro_df = macro_df.sort_values("scenario")
+    return macro_df
+
+
+def plot_f1_by_pretrain_percentage(predictions1d, predictions2d):
+    """
+    Make a macro F1 plot versus pre-train percentage.
+
+    We compare 1-D results to 2-D results.
+
+    Both predictions1d and predictions2d come from the pickle that is a
+    collation of all the trials for the model type, across the different
+    scenarios.
+    """
+    data_1d = _format_f1_by_pretrain_percentage(predictions1d)
+    data_2d = _format_f1_by_pretrain_percentage(predictions2d)
+
+    fig, ax = plt.subplots()
+    ax.set_xlabel("Pre-train Percentage (%)")
+    ax.set_ylabel("Average Macro F1")
+    # ^ marker is triangle
+    ax.plot("scenario", "f1", data=data_1d, marker="^", label="1-D Model")
+    # s marker is square
+    ax.plot("scenario", "f1", data=data_2d, marker="s", label="2-D Model")
+    ax.legend()
+    ax.set_ylim([0.7, 0.8])

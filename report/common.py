@@ -46,7 +46,9 @@ def _make_macro_f1_table(predictions):
         mean=pd.NamedAgg("f1", "mean"),
         std=pd.NamedAgg("f1", "std"),
     )
-    macro_df["macro_f1"] = _make_mean_std_column(macro_df["mean"], macro_df["std"])
+    macro_df["macro_f1"] = _make_mean_std_column(
+        macro_df["mean"], macro_df["std"]
+    )
     macro_df = macro_df[["macro_f1"]]
     return macro_df
 
