@@ -31,7 +31,7 @@ The below plot compares the 1DResnet performance to the 2dResnet performance as 
 While the pre-training advantage shown in the original paper was replicated for the 2dResNet model, we did not show increased performance from the spectrogram pre-training and larger 2D resnet (11.2 million parameters vs 4.5 million parameters).
 
 
-For reference, below shows a "normal" beat for a pretraining sample of Patient 0:
+For reference, below shows a "normal" beat for a pretraining sample of Patient 0, and its corresponding pre-processed spectrogram:
 
 ![time domain](report/images/timedomain_normal_pretrain_sample.JPG)
 
