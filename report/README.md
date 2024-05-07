@@ -33,5 +33,5 @@ The output PDF will be located in this directory as well.
 
 ### Hiding notebook cells from PDF
 
-One can mark some cells in the notebook to be hidden in the output PDF. One way to do this is to set the cell tag in an editor like VSCode.
+One can mark some cells in the notebook to be hidden in the output PDF. One way to do this is to set the cell tag in an editor like VSCode. Here, we add "hidden" to the cell tag to exclude the cell from the output PDF.
 
