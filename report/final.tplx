@@ -1,5 +1,19 @@
 ((*- extends 'index.tex.j2' -*))
 
+((* block predoc *))
+((( super() )))
+    ((* block tableofcontents *))
+    \tableofcontents
+    \newpage
+    ((* endblock tableofcontents *))
+((* endblock predoc *))
+
+((* block packages *))
+% Ensure References section appear in the Table of contents in the output pdf.
+\usepackage[nottoc,numbib]{tocbibind}
+((( super() )))
+((* endblock packages *))
+
 ((* block author *))
 \author{Ted Hsu, Myles Iribarne, Daniel Xu}
 ((* endblock author *))
