@@ -65,18 +65,18 @@ Below this line is the original README.
 
 Scripts for [Pretraining](pretraining) and [Finetuning](finetuning) residual networks on ECG data.
 
-## Reproducing results and evaluation code. 
-For complete details on how to reproduce our results, including evaluation code, please see our full report [here](report/DL4H_Team_1.ipynb)
+## Reproducing results and evaluation code.
+For complete details on how to reproduce our results, including evaluation code, please see our full report [here](report/DL4H_Team_1.ipynb).
 
 ## Pre-trained model weights
-Note that these model weights have already been preprocessed with the pretraining.utils.get_pretrained_weights to remove the classification layer - they are ready for use in fine-tuning. 
+Note that these model weights have already been preprocessed with  `pretraining.utils.get_pretrained_weights` to remove the classification layer - they are ready for use in fine-tuning.
 
-### 1DResnet pretrained weights:
+### 1-D ResNet pretrained weights:
 Pre-trained model weights with patients 0-2047 of the _Icentia11k_ dataset (~20%) can be downloaded from Google Drive [here](https://drive.google.com/file/d/1-9hQzriOv6y6DUu_ND23lwqGo6zv78yv/view?usp=sharing).
 
 Pre-trained model weights we trained with all patients of the _Icentia11k_ dataset (100%) can be downloaded from Google Drive [here](https://drive.google.com/file/d/1-I6J8AEJaWiNI88LGQ5tjLOVMd-qbxdu/view?usp=sharing).
 
-### 2DResnet (spectrogram) pretrained weights:
+### 2-D ResNet (spectrogram) pretrained weights:
 Pre-trained model weights we trained with patients 0-2047 of the _Icentia11k_ dataset (~20%) can be found downloaded from Google Drive [here](https://drive.google.com/file/d/1-2rY0cxoLG1xK-L7RNKNwX0fDDtpT5oo/view?usp=sharing).
 
 
